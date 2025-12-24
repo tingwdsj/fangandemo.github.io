@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>目录设置 - 方案报告智写平台</title>
+  <link rel="stylesheet" href="./assets/css/variables.css">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+  <link rel="stylesheet" href="./assets/css/pages/directory.css">
+</head>
+<body>
+  <!-- 页面头部 -->
+  <header class="header">
+    <div class="header-container">
+      <button class="btn-back" id="btn-home">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21 20.4142 21C20.0391 21 19.5304 21 19 21H5C4.46957 21 3.96086 21 3.58579 21C3.21071 21 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        主页
+      </button>
+      <h1 class="page-title">目录设置</h1>
+      <div class="step-indicator">
+        步骤: <span class="current-step">2</span>/4
+      </div>
+    </div>
+  </header>
+
+  <!-- 主内容区 -->
+  <main class="main">
+    <!-- 目录编辑区 -->
+    <section class="directory-editor">
+      <div class="editor-toolbar">
+        <button class="btn btn-secondary btn-sm" id="add-chapter">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          添加章节
+        </button>
+        <button class="btn btn-secondary btn-sm" id="collapse-all">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          全部折叠
+        </button>
+        <button class="btn btn-secondary btn-sm" id="expand-all">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          全部展开
+        </button>
+      </div>
+
+      <div class="tree-container" id="tree-container">
+        <!-- 目录树将由JS生成 -->
+      </div>
+    </section>
+
+    <!-- 重新生成面板 -->
+    <section class="regenerate-panel">
+      <div class="panel-header">
+        <h3>对目录不满意？输入修改意见重新生成</h3>
+        <button class="btn-toggle" id="toggle-regenerate">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 15L9 9M15 9L19 15M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel-content" id="regenerate-content">
+        <div class="form-group">
+          <label class="form-label">修改意见</label>
+          <textarea class="textarea" id="regenerate-comment" maxlength="256" placeholder="请输入您对目录的修改意见，例如：增加XXX章节、调整XXX顺序等"></textarea>
+          <div class="char-count"><span class="current-count">0</span>/256</div>
+        </div>
+        <button class="btn btn-secondary btn-md" id="regenerate-btn">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20.49 9C19.9828 7.56678 19.1209 6.28542 17.9845 5.27542C16.8482 4.26541 15.4745 3.55976 13.9917 3.22426C12.5089 2.88875 10.9652 2.93434 9.50481 3.35677C8.04437 3.77921 6.71475 4.56471 5.64 5.64L1 10M23 14L18.36 18.36C17.2853 19.4353 15.9556 20.2208 14.4952 20.6432C13.0348 21.0657 11.4911 21.1112 10.0083 20.7757C8.52547 20.4402 7.1518 19.7346 6.01547 18.7246C4.87913 17.7146 4.01717 16.4332 3.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          重新生成目录
+        </button>
+      </div>
+    </section>
+
+    <!-- 底部操作栏 -->
+    <div class="actions-bar actions-bar-center">
+      <button class="btn btn-primary btn-md" id="generate-content-btn">
+        确认并生成正文
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </main>
+
+  <!-- 添加章节模态框 -->
+  <div class="modal-overlay" id="add-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">添加章节</h3>
+        <button class="btn-close" id="close-add-modal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label required">
+            章节名称
+            <span class="required-star">*</span>
+          </label>
+          <input type="text" class="input" id="chapter-name" placeholder="请输入章节名称">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-add-modal">取消</button>
+        <button class="btn btn-primary" id="confirm-add-chapter">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 生成进度模态框 -->
+  <div class="modal-overlay" id="progress-modal">
+    <div class="modal modal-small">
+      <div class="modal-body modal-body-centered">
+        <div class="progress-spinner">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2V6M12 18V22M6 12H2M22 12H18M19.07 4.93L16.24 7.76M7.76 16.24L4.93 19.07M19.07 19.07L16.24 16.24M7.76 7.76L4.93 4.93" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="progress-text">正在生成正文...</p>
+        <div class="progress">
+          <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+        </div>
+        <p class="progress-percent"><span id="progress-percent">0</span>%</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/js/pages/directory.js"></script>
+</body>
+</html>
