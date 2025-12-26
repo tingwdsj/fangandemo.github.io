@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>方案创建 - 方案报告智写平台</title>
+  <link rel="stylesheet" href="./assets/css/variables.css">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+  <link rel="stylesheet" href="./assets/css/pages/create.css">
+</head>
+<body>
+  <!-- 页面头部 -->
+  <header class="header">
+    <div class="header-container">
+      <button class="btn-back" id="btn-home">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21 20.4142 21C20.0391 21 19.5304 21 19 21H5C4.46957 21 3.96086 21 3.58579 21C3.21071 21 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        主页
+      </button>
+      <h1 class="page-title">方案创建</h1>
+      <div class="step-indicator">
+        步骤: <span class="current-step">1</span>/4
+      </div>
+    </div>
+  </header>
+
+  <!-- 主内容区 -->
+  <main class="main">
+    <!-- 步骤一：输入目录结构 -->
+    <section class="section">
+      <h2 class="section-title">步骤一：输入目录结构</h2>
+
+      <!-- 选项卡 -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="manual">手动输入</button>
+        <button class="tab-btn" data-tab="template">选择模板</button>
+      </div>
+
+      <!-- 手动输入模式 -->
+      <div class="tab-content active" id="manual-tab">
+        <div class="input-wrapper">
+          <textarea class="textarea directory-input" placeholder="请输入方案目录结构，支持缩进表示层级关系&#10;&#10;示例：&#10;1. 项目概述&#10;    1.1 项目背景&#10;    1.2 项目目标&#10;2. 技术方案&#10;    2.1 技术架构"></textarea>
+          <div class="input-actions">
+            <button class="btn btn-text btn-sm" id="show-example">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              格式示例
+            </button>
+          </div>
+        </div>
+        <div class="format-example" id="format-example" style="display: none;">
+          <h4>标准格式示例</h4>
+          <pre>1. 项目概述
+    1.1 项目背景
+        1.1.1 行业现状
+        1.1.2 市场需求
+    1.2 项目目标
+2. 技术方案
+    2.1 技术架构
+    2.2 核心技术
+3. 实施计划
+    3.1 项目阶段
+    3.2 时间安排</pre>
+        </div>
+      </div>
+
+      <!-- 模板选择模式 -->
+      <div class="tab-content" id="template-tab">
+        <div class="template-grid">
+          <div class="template-card" data-template="tech">
+            <div class="template-icon">🔬</div>
+            <h3 class="template-name">科技类</h3>
+            <p class="template-desc">技术研发、系统集成、信息化建设项目</p>
+          </div>
+          <div class="template-card" data-template="engineering">
+            <div class="template-icon">🏗️</div>
+            <h3 class="template-name">工程类</h3>
+            <p class="template-desc">工程建设、基础设施、工程项目管理</p>
+          </div>
+          <div class="template-card" data-template="service">
+            <div class="template-icon">💼</div>
+            <h3 class="template-name">服务类</h3>
+            <p class="template-desc">咨询服务、培训服务、运营管理服务</p>
+          </div>
+          <div class="template-card" data-template="comprehensive">
+            <div class="template-icon">📊</div>
+            <h3 class="template-name">综合类</h3>
+            <p class="template-desc">综合方案、整体解决方案、多领域项目</p>
+          </div>
+        </div>
+
+        <!-- 模板目录结构显示 -->
+        <div class="template-preview" id="template-preview" style="display: none;">
+          <h4>模板目录结构</h4>
+          <pre id="template-directory"></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 步骤二：填写方案信息 -->
+    <section class="section">
+      <h2 class="section-title">步骤二：填写方案信息</h2>
+
+      <form class="form" id="project-form">
+        <!-- 方案名称 -->
+        <div class="form-group">
+          <label class="form-label required">
+            方案名称
+            <span class="required-star">*</span>
+          </label>
+          <input type="text" class="input" id="project-name" maxlength="256" placeholder="请输入方案名称" required>
+          <div class="char-count"><span class="current-count">0</span>/256</div>
+        </div>
+
+        <!-- 方案类型 -->
+        <div class="form-group">
+          <label class="form-label">
+            方案类型
+            <span class="char-count-inline">(<span class="current-count">0</span>/48)</span>
+          </label>
+          <input type="text" class="input" id="project-type" maxlength="48" placeholder="请输入方案类型">
+        </div>
+
+        <!-- 撰写要求 -->
+        <div class="form-group">
+          <label class="form-label">
+            撰写要求
+            <span class="char-count-inline">(<span class="current-count">0</span>/2000)</span>
+          </label>
+          <textarea class="textarea" id="requirements" maxlength="2000" placeholder="请输入方案撰写的具体要求和特殊说明"></textarea>
+        </div>
+
+        <!-- 上传参考资料 -->
+        <div class="form-group">
+          <label class="form-label required">
+            上传参考资料
+            <span class="required-star">*</span>
+          </label>
+          <div class="upload-area" id="upload-area">
+            <div class="upload-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17 8L12 3L7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="upload-text">拖拽文件到此处，或点击选择文件</p>
+            <p class="upload-hint">支持 .doc / .docx / .pdf 格式，最多20个文件，单个≤50MB</p>
+            <input type="file" id="file-input" multiple accept=".doc,.docx,.pdf" hidden>
+          </div>
+
+          <!-- 已上传文件列表 -->
+          <div class="file-list" id="file-list"></div>
+        </div>
+      </form>
+    </section>
+
+    <!-- 底部操作栏 -->
+    <div class="actions-bar actions-bar-center">
+      <button class="btn btn-primary btn-md" id="generate-directory-btn">
+        生成目录
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </main>
+
+  <!-- 模态框：确认生成 -->
+  <div class="modal-overlay" id="confirm-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">确认生成目录</h3>
+        <button class="btn-close" id="close-modal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>确认生成方案目录？生成后将进入目录设置页面进行调整。</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-modal">取消</button>
+        <button class="btn btn-primary" id="confirm-generate">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/js/pages/create.js"></script>
+</body>
+</html>
