@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>目录设置 - 方案报告智写平台</title>
+  <link rel="stylesheet" href="./assets/css/variables.css">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+  <link rel="stylesheet" href="./assets/css/pages/directory.css">
+</head>
+<body>
+  <!-- 页面头部 -->
+  <header class="header">
+    <div class="header-container">
+      <button class="btn-back" id="btn-home">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21 20.4142 21C20.0391 21 19.5304 21 19 21H5C4.46957 21 3.96086 21 3.58579 21C3.21071 21 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        主页
+      </button>
+      <h1 class="page-title">目录设置</h1>
+      <div class="step-indicator">
+        步骤: <span class="current-step">2</span>/4
+      </div>
+    </div>
+  </header>
+
+  <!-- 主内容区 -->
+  <main class="main">
+    <div class="main-content-wrapper">
+      <!-- 左侧：文档索引状态看板 -->
+      <aside class="left-sidebar">
+        <section class="index-status-panel">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12H15M12 9V15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              文档索引状态
+            </h3>
+          </div>
+          <div class="status-summary">
+            <span class="status-badge status-badge--info">
+              <span class="status-dot"></span>
+              索引中: <strong id="indexing-count">0</strong>
+            </span>
+            <span class="status-badge status-badge--success">
+              <span class="status-dot"></span>
+              已完成: <strong id="completed-count">0</strong>
+            </span>
+            <span class="status-badge status-badge--warning">
+              <span class="status-dot"></span>
+              索引暂停: <strong id="paused-count">0</strong>
+            </span>
+            <span class="status-badge status-badge--error">
+              <span class="status-dot"></span>
+              索引失败: <strong id="failed-count">0</strong>
+            </span>
+          </div>
+          <div class="index-list" id="index-list">
+            <!-- 文档索引列表将由JS生成 -->
+          </div>
+        </section>
+      </aside>
+
+      <!-- 右侧：主要内容区 -->
+      <div class="right-content">
+        <!-- 目录编辑区 -->
+        <section class="directory-editor">
+          <div class="editor-toolbar">
+            <button class="btn btn-secondary btn-sm" id="add-chapter">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              添加章节
+            </button>
+            <button class="btn btn-secondary btn-sm" id="collapse-all">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              全部折叠
+            </button>
+            <button class="btn btn-secondary btn-sm" id="expand-all">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              全部展开
+            </button>
+          </div>
+
+          <div class="tree-container" id="tree-container">
+            <!-- 目录树将由JS生成 -->
+          </div>
+        </section>
+
+        <!-- 重新生成面板 -->
+        <section class="regenerate-panel">
+          <div class="panel-header">
+            <h3>对目录不满意？输入修改意见重新生成</h3>
+            <button class="btn-toggle" id="toggle-regenerate">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="panel-content" id="regenerate-content">
+            <div class="form-group">
+              <label class="form-label">修改意见</label>
+              <textarea class="textarea" id="regenerate-comment" maxlength="256" placeholder="请输入您对目录的修改意见，例如：增加XXX章节、调整XXX顺序等"></textarea>
+              <div class="char-count"><span class="current-count">0</span>/256</div>
+            </div>
+            <button class="btn btn-secondary btn-md" id="regenerate-btn">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M20.49 9C19.9828 7.56678 19.1209 6.28542 17.9845 5.27542C16.8482 4.26541 15.4745 3.55976 13.9917 3.22426C12.5089 2.88875 10.9652 2.93434 9.50481 3.35677C8.04437 3.77921 6.71475 4.56471 5.64 5.64L1 10M23 14L18.36 18.36C17.2853 19.4353 15.9556 20.2208 14.4952 20.6432C13.0348 21.0657 11.4911 21.1112 10.0083 20.7757C8.52547 20.4402 7.1518 19.7346 6.01547 18.7246C4.87913 17.7146 4.01717 16.4332 3.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              重新生成目录
+            </button>
+          </div>
+        </section>
+
+        <!-- 底部操作栏 -->
+        <div class="actions-bar actions-bar-center">
+          <button class="btn btn-primary btn-md" id="generate-content-btn">
+            确认并生成正文
+            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 添加章节模态框 -->
+  <div class="modal-overlay" id="add-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">添加章节</h3>
+        <button class="btn-close" id="close-add-modal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label required">
+            章节名称
+            <span class="required-star">*</span>
+          </label>
+          <input type="text" class="input" id="chapter-name" placeholder="请输入章节名称">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-add-modal">取消</button>
+        <button class="btn btn-primary" id="confirm-add-chapter">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 生成进度模态框 -->
+  <div class="modal-overlay" id="progress-modal">
+    <div class="modal modal-small">
+      <div class="modal-body modal-body-centered">
+        <div class="progress-spinner">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2V6M12 18V22M6 12H2M22 12H18M19.07 4.93L16.24 7.76M7.76 16.24L4.93 19.07M19.07 19.07L16.24 16.24M7.76 7.76L4.93 4.93" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="progress-title">正在生成正文</h3>
+        <p class="progress-description">
+          AI正在根据您设置的目录生成完整正文，预计需要 <strong>3-5分钟</strong>。
+        </p>
+        <div class="progress-tips">
+          <div class="tip-item">
+            <svg class="tip-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>您可以保持此页面继续等待</span>
+          </div>
+          <div class="tip-item">
+            <svg class="tip-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16L21 8V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M17 21V13H7V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7 3V8H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>也可以前往"历史方案库"查看进度</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="back-to-home-btn">返回主页</button>
+        <button class="btn btn-primary" id="keep-waiting-btn">继续等待</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 索引状态确认弹窗 -->
+  <div class="modal-overlay" id="index-confirm-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="index-confirm-title">提示</h3>
+        <button class="btn-close" id="close-index-confirm">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="confirm-message">
+          <div class="confirm-icon" id="confirm-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="confirm-text" id="confirm-text"></p>
+          <div class="confirm-details" id="confirm-details"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-index-confirm">再等等</button>
+        <button class="btn btn-primary" id="confirm-index-generate">确认生成</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/js/pages/directory.js"></script>
+</body>
+</html>
